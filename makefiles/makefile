@@ -1,24 +1,45 @@
-# makefile for program3
-compiler = g++
-flags = -std=c++17 -Wall     
-compile = $(compiler) $(flags) -c 
-link = $(compiler) $(flags) -o 
+flags = -std=c++17 -Wall
 
-style : word_search_functions.cc 
-	cpplint word_search_functions.cc
+style1 : program2functions.h
+	cpplint program2functions.h
 
-word_search_functions.o : word_search_functions.cc word_search_functions.h
-	$(compile) $<
+style2 : program2functions.cc
+	cpplint program2functions.cc
 
-program3.o : program3.cc word_search_functions.h
-	$(compile) $<
+program2functions.o : program2functions.cc program2functions.h
+	g++ $(flags) -c $<
 
-program3 : word_search_functions.o program3.o
-	$(link) $@ $^
+compile : program2functions.o
+	
 
-test : program3
-	./$<
+testRange : testRange.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
+
+testDigitInPosition : testDigitInPosition.cc program2functions.o
+	g++ -$(flags) $^ -o $@
+	./$@
+
+testIsSquare : testIsSquare.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
+
+testIsPerfect : testIsPerfect.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
+
+testToDigit : testToDigit.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
+
+testIsConsonant : testIsConsonant.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
+
+testIsVowel : testIsVowel.cc program2functions.o
+	g++ $(flags) $^ -o $@
+	./$@
 
 clean :
-	rm *.o program3 
+	rm checkit program2*.o testLeapYear testLastDayOfMonth testValidDate testNextDate testPreviousDate
 
